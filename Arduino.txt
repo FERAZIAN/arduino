@@ -1,0 +1,32 @@
+#include "DHT.h"
+#define dht_type DHT11
+
+int dht_pin = A1; // Define o pino ao qual o sensor está conectado (no caso, A0)
+DHT dht_1 = DHT(dht_pin, dht_type); // Cria um objeto DHT chamado dht_1, que representa o sensor conectado ao pino
+especificado
+
+void setup() {
+Serial.begin(9600); // Inicia a comunicação serial com uma taxa de transmissão de 9600 bits por segundo
+dht_1.begin(); // Inicia o sensor DHT11
+}
+
+void loop() {
+float umidade = dht_1.readHumidity(); // Lê a umidade do sensor e armazena na variável umidade
+float temperatura = dht_1.readTemperature(); // Lê a temperatura do sensor e armazena na variável temperatura
+
+// Verifica se ocorreu algum erro na leitura dos valores do sensor
+if(isnan(temperatura) or isnan(umidade)){
+Serial.println("Erro ao ler"); // Se ocorreu um erro, exibe uma mensagem de erro
+} else {
+// Se não houve erro, exibe os valores de umidade e temperatura
+//Serial.print("Umidade: ");
+Serial.print(umidade);
+//Serial.print(" % ");
+Serial.print(" ");
+//Serial.print("Temperatura: ");
+Serial.println(temperatura);
+//Serial.println(" ºC");
+}
+
+delay(2000); // Aguarda 2 segundos antes de realizar uma nova leitura
+}
